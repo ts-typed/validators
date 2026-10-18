@@ -24,6 +24,17 @@ export class PIS extends ValueObject {
   public numbers(): string {
     return this.toString().replace(/[\s./-]/g, '');
   }
+
+  /**
+   * Privacy-masked display form: `***.65328.70-*`. Hides the first 3-digit
+   * group and the final check digit, showing the middle portion. This applies
+   * the same proportional masking principle as `CPF.redact()`; it is not a
+   * PIS-specific federal standard.
+   */
+  public redact(): string {
+    const d = this.numbers();
+    return `***.${d.slice(3, 8)}.${d.slice(8, 10)}-*`;
+  }
 }
 
 export { PIS as Pasep, PIS as Nis, PIS as Nit };

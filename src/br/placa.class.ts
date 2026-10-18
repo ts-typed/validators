@@ -32,6 +32,16 @@ export class Placa extends ValueObject {
   public numbers(): string {
     return normalize(this.toString());
   }
+
+  /**
+   * Privacy-masked form: `ABC****` for either format (legacy or Mercosul),
+   * with no separator. Shows the 3-letter prefix and masks the rest. This is a
+   * reasonable, consistent masking convention chosen for this library; it is
+   * not an official plate-specific standard.
+   */
+  public redact(): string {
+    return `${this.numbers().slice(0, 3)}****`;
+  }
 }
 
 function normalize(raw: string): string {

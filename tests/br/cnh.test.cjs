@@ -35,3 +35,9 @@ test('CNH behaves like a string', () => {
   assert.equal(cnh.length, 11);
   assert.equal(cnh.endsWith('120'), true);
 });
+
+test('CNH redact hides the first 3 and last 2 digits, keeping numbers intact', () => {
+  const cnh = new CNH('03215478120');
+  assert.equal(cnh.redact(), '***154781**');
+  assert.equal(cnh.numbers(), '03215478120');
+});

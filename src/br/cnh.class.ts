@@ -20,6 +20,16 @@ export class CNH extends ValueObject {
   public numbers(): string {
     return this.toString().replace(/[\s./-]/g, '');
   }
+
+  /**
+   * Privacy-masked form: `***154781**`. Hides the first 3 and last 2 digits,
+   * showing the middle 6. The CNH has no official masking standard; this
+   * applies the same proportion as `CPF.redact()` for consistency.
+   */
+  public redact(): string {
+    const d = this.numbers();
+    return `***${d.slice(3, 9)}**`;
+  }
 }
 
 function isValidCNH(cleaned: string): boolean {

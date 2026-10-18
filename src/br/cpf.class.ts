@@ -23,6 +23,17 @@ export class CPF extends ValueObject {
   public numbers(): string {
     return this.toString().replace(/[\s./-]/g, '');
   }
+
+  /**
+   * Privacy-masked display form: `***.456.789-**`. Hides the first 3-digit
+   * group and the two check digits, showing the middle groups. This follows a
+   * convention used by at least one state's public transparency portal for
+   * CPF; it is a widely used practice, not a single federal standard.
+   */
+  public redact(): string {
+    const d = this.numbers();
+    return `***.${d.slice(3, 6)}.${d.slice(6, 9)}-**`;
+  }
 }
 
 function isValidCPF(cleaned: string): boolean {

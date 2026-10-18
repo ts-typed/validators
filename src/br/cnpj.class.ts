@@ -30,6 +30,22 @@ export class CNPJ extends ValueObject {
   public numbers(): string {
     return normalize(this.toString());
   }
+
+  /**
+   * Privacy-masked display form: `**.ABC.345/01DE-**`. Hides the first
+   * 2-character group and the final 2 check digits.
+   *
+   * CNPJ identifies a LEGAL ENTITY (a company), not a natural person. LGPD's
+   * personal-data protections apply to pessoa física, so redacting a CNPJ is
+   * not a legal requirement the way it is for CPF. This method exists for API
+   * consistency with the other document classes, not because CNPJ redaction is
+   * commonly practiced or required. The masking pattern follows the same
+   * principle as `CPF.redact()`; it is not a CNPJ-specific federal standard.
+   */
+  public redact(): string {
+    const v = this.numbers();
+    return `**.${v.slice(2, 5)}.${v.slice(5, 8)}/${v.slice(8, 12)}-**`;
+  }
 }
 
 function normalize(raw: string): string {

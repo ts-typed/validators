@@ -4,3 +4,4 @@ export { PIS, Pasep, Nis, Nit } from './pis.class';
 export { CEP } from './cep.class';
 export { Placa } from './placa.class';
 export { CNH } from './cnh.class';
+export { FullName } from './full-name.class';

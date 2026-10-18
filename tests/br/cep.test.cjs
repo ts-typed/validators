@@ -5,10 +5,11 @@ const test = require('node:test');
 const { StrictTypeError } = require('@ts-typed/compiler');
 const { CEP } = require('../../dist/br');
 
-test('CEP accepts a formatted value and exposes masked/numbers', () => {
+test('CEP accepts a formatted value and exposes masked/numbers/redact', () => {
   const cep = new CEP('12345-678');
   assert.equal(cep.masked(), '12345-678');
   assert.equal(cep.numbers(), '12345678');
+  assert.equal(cep.redact(), '*****-678');
 });
 
 test('CEP accepts the same value without formatting', () => {

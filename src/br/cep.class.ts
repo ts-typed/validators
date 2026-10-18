@@ -25,4 +25,14 @@ export class CEP extends ValueObject {
   public numbers(): string {
     return this.toString().replace(/[\s./-]/g, '');
   }
+
+  /**
+   * Hides the first 5 digits (the part that narrows a location down to a
+   * specific area/sector) and shows only the last 3 (the distribution
+   * digits): `"12345-678"` -> `"*****-678"`.
+   */
+  public redact(): string {
+    const d = this.numbers();
+    return `*****-${d.slice(5)}`;
+  }
 }

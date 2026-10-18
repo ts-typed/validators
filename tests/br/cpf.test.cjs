@@ -38,3 +38,10 @@ test('CPF behaves like a string', () => {
   assert.equal(cpf.slice(0, 3), '123');
   assert.equal(JSON.stringify({ cpf }), '{"cpf":"12345678909"}');
 });
+
+test('CPF redact hides the first group and check digits, keeping masked/numbers intact', () => {
+  const cpf = new CPF('123.456.789-09');
+  assert.equal(cpf.redact(), '***.456.789-**');
+  assert.equal(cpf.masked(), '123.456.789-09');
+  assert.equal(cpf.numbers(), '12345678909');
+});

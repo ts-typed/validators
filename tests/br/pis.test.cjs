@@ -43,3 +43,10 @@ test('PIS behaves like a string', () => {
   assert.equal(pis.length, 11);
   assert.equal(pis.trim(), '12065328705');
 });
+
+test('PIS redact hides the first group and final check digit, keeping masked/numbers intact', () => {
+  const pis = new PIS('120.65328.70-5');
+  assert.equal(pis.redact(), '***.65328.70-*');
+  assert.equal(pis.masked(), '120.65328.70-5');
+  assert.equal(pis.numbers(), '12065328705');
+});

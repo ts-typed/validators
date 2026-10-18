@@ -4,6 +4,26 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-10-18
+
+### Added
+
+- A new `FullName` validator: confirms a value looks like a plausible Brazilian full name (at least two words of letters — including accented characters, apostrophes, hyphens), with `.firstName()` (the first word) and `.lastName()` (everything after the first word).
+- A `.redact()` privacy-masking method on every class except `CEP`'s own numeric-only predecessor behavior changed too (see below):
+  - `CPF`: `"123.456.789-09"` -> `"***.456.789-**"` (hide the first group and the check digits).
+  - `CNPJ`: hide the first group and the check digits (works for both the legacy numeric and alphanumeric formats).
+  - `PIS`/`Pasep`/`Nis`/`Nit`: hide the first group and the final check digit.
+  - `CNH`: hide the first 3 and last 2 of its 11 digits.
+  - `Placa`: show the 3-letter prefix, mask everything after it (`"ABC1234"`/`"ABC1D23"` -> `"ABC****"`).
+  - `CEP`: hide the first 5 digits (area/sector), show only the last 3 (`"12345-678"` -> `"*****-678"`).
+  - `FullName`: every word reduced to its first letter plus one asterisk per remaining character (`"Ana Maria Silva Santos"` -> `"A** M**** S**** S*****"`).
+
+  None of these formats are mandated by a single federal standard — Brazil has no unified rule for this (there's an open legislative proposal asking for one, because fragmented masks across institutions make them easier to reverse-engineer). `CPF`'s format matches a real, documented state transparency-portal convention; the others follow the same principle for consistency, not independent sourcing per document type. `CNPJ` identifies a legal entity, not a natural person — LGPD's personal-data protections don't apply to it the way they do to the others, so `.redact()` there is for API consistency, not a compliance requirement.
+
+### Changed
+
+- Depends on `@ts-typed/compiler@0.1.22` (the version this package's own dependency was pinned to had fallen behind the app-level direct dependency in a real install, creating two separate `ValueObject`/`StrictTypeError` class instances and silently breaking `@Catch(StrictTypeError)` matching — caught via a real end-to-end demo, same root cause documented in `@ts-typed/nestjs`'s own CHANGELOG history).
+
 ## [0.1.0] - 2026-10-18
 
 ### Added

@@ -42,3 +42,15 @@ test('Placa behaves like a string', () => {
   assert.equal(placa.length, 7);
   assert.equal(placa.toLowerCase(), 'abc1234');
 });
+
+test('Placa redact shows the 3-letter prefix and masks the rest, for either format', () => {
+  const legacy = new Placa('ABC1234');
+  assert.equal(legacy.redact(), 'ABC****');
+  assert.equal(legacy.masked(), 'ABC-1234');
+  assert.equal(legacy.numbers(), 'ABC1234');
+
+  const mercosul = new Placa('ABC1D23');
+  assert.equal(mercosul.redact(), 'ABC****');
+  assert.equal(mercosul.masked(), 'ABC1D23');
+  assert.equal(mercosul.numbers(), 'ABC1D23');
+});

@@ -48,3 +48,15 @@ test('CNPJ behaves like a string', () => {
   assert.equal(cnpj.length, 14);
   assert.equal(cnpj.toUpperCase(), '11222333000181');
 });
+
+test('CNPJ redact hides the first group and check digits, keeping masked/numbers intact', () => {
+  const legacy = new CNPJ('11.222.333/0001-81');
+  assert.equal(legacy.redact(), '**.222.333/0001-**');
+  assert.equal(legacy.masked(), '11.222.333/0001-81');
+  assert.equal(legacy.numbers(), '11222333000181');
+
+  const alnum = new CNPJ('12ABC34501DE35');
+  assert.equal(alnum.redact(), '**.ABC.345/01DE-**');
+  assert.equal(alnum.masked(), '12.ABC.345/01DE-35');
+  assert.equal(alnum.numbers(), '12ABC34501DE35');
+});

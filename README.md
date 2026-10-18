@@ -38,10 +38,23 @@ Import from `@ts-typed/validators` or `@ts-typed/validators/br` (same exports, e
 | `CEP` | Postal code | Format only — no check digit exists | `"01310-100"` or `"01310100"` |
 | `Placa` | Vehicle plate | Format only — no check digit exists | Legacy (`"ABC1234"`) or Mercosul (`"ABC1D23"`) |
 | `CNH` | Driver's license number | Modulus 11 | `"03215478120"` |
+| `FullName` | Full name (first + surname) | None — plausibility only | `"Ana Maria Silva Santos"` |
 
-Every class exposes `.numbers()` (the normalized, unformatted value) and, where there's a natural display format, `.masked()`. `CNH` has no standard formatted display form, so it only exposes `.numbers()`.
+Every document class exposes `.numbers()` (the normalized, unformatted value) and, where there's a natural display format, `.masked()`. `CNH` has no standard formatted display form, so it only exposes `.numbers()`. `FullName` exposes `.firstName()` and `.lastName()` instead.
 
 **`CEP` and `Placa` validate FORMAT only** — neither document type has a nationally standardized check digit, so these confirm shape (length/pattern), not that a specific number was actually issued.
+
+## Privacy masking (`.redact()`)
+
+Every class — including `FullName` — exposes `.redact()`, for displaying a value in a context where the full value shouldn't be shown (logs, public listings, support tooling):
+
+```ts
+new CPF('123.456.789-09').redact();                    // "***.456.789-**"
+new CEP('12345-678').redact();                          // "*****-678"
+new FullName('Ana Maria Silva Santos').redact();        // "A** M**** S**** S*****"
+```
+
+Brazil has no single federal standard for this (there's an open legislative proposal asking for one, precisely because different institutions using different masks makes a number easier to reconstruct by cross-referencing). `CPF`'s format matches a real, documented state transparency-portal convention; the rest follow the same principle for consistency, not independent sourcing per document type. `CNPJ` identifies a legal entity, not a natural person, so LGPD's personal-data rules don't apply to it the way they do the others — its `.redact()` exists for API consistency, not because redacting a CNPJ is commonly required.
 
 ## Why no `RG`
 
