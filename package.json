@@ -1,0 +1,50 @@
+{
+    "name": "@ts-typed/validators",
+    "version": "0.1.0",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Document/data validators built on @ts-typed/compiler's ValueObject, organized by locale (starting with Brazil)",
+    "license": "Apache-2.0",
+    "engines": {
+        "node": ">=22"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./br": {
+            "types": "./dist/br/index.d.ts",
+            "require": "./dist/br/index.js",
+            "default": "./dist/br/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "CHANGELOG.md"
+    ],
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "build": "tsc",
+        "test": "npm run build && node --test --test-concurrency=1"
+    },
+    "dependencies": {
+        "@ts-typed/compiler": "0.1.21"
+    },
+    "peerDependencies": {
+        "typescript": ">=5.9 <6"
+    },
+    "devDependencies": {
+        "@types/node": "^22.15.21",
+        "typescript": "5.9.3"
+    }
+}
