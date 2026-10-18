@@ -4,6 +4,18 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-10-18
+
+### Changed
+
+- **`FullName` is no longer Brazil-specific.** Moved from `@ts-typed/validators/br` to a new `@ts-typed/validators/global` entry point (also re-exported from the package root). It no longer validates against `./br`'s exports — `require('@ts-typed/validators/br').FullName` is now `undefined`.
+
+### Added
+
+- A new `@ts-typed/validators/global` entry point for validators meant for universal/international use, exporting `FullName`, `Email`, and `CreditCard`.
+- `Email`: validates `local-part@domain.tld` pragmatically (not full RFC 5322) — local part allows letters/digits/`._%+-`, domain allows letters/digits/hyphens/dots, must end in a 2+ letter TLD. Adds `.localPart()`, `.domain()`, and `.redact()` (keeps the local part's first character, masks the rest, shows the domain in full: `"ana@example.com"` -> `"a**@example.com"`).
+- `CreditCard`: validates a payment card number with the Luhn checksum (network-agnostic, works across card networks worldwide). Accepts spaces/hyphens as separators; the cleaned value must be 12-19 digits and pass the Luhn check. Adds `.numbers()`, `.masked()` (last 4 digits shown, rest masked in groups of 4: `"4532015112830366"` -> `"**** **** **** 0366"`), and `.redact()` (same as `.masked()`).
+
 ## [0.1.1] - 2026-10-18
 
 ### Added

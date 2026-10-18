@@ -1,11 +1,11 @@
 {
     "name": "@ts-typed/validators",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "private": false,
     "publishConfig": {
         "access": "public"
     },
-    "description": "Document/data validators built on @ts-typed/compiler's ValueObject, organized by locale (starting with Brazil)",
+    "description": "Document/data validators built on @ts-typed/compiler's ValueObject: locale-specific (Brazil) and global (Email, CreditCard, FullName) validators",
     "license": "Apache-2.0",
     "engines": {
         "node": ">=22"
@@ -22,6 +22,11 @@
             "types": "./dist/br/index.d.ts",
             "require": "./dist/br/index.js",
             "default": "./dist/br/index.js"
+        },
+        "./global": {
+            "types": "./dist/global/index.d.ts",
+            "require": "./dist/global/index.js",
+            "default": "./dist/global/index.js"
         },
         "./package.json": "./package.json"
     },

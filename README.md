@@ -7,28 +7,34 @@ npm install @ts-typed/validators
 ```
 
 ```ts
-import { CPF } from '@ts-typed/validators'; // or '@ts-typed/validators/br'
+import { CPF } from '@ts-typed/validators/br';
+import { Email } from '@ts-typed/validators/global';
 
 export class CreateUserDto {
-  public readonly cpf!: CPF; // declared as CPF, populated from JSON as a plain string
+  public readonly cpf!: CPF;     // Brazil-specific
+  public readonly email!: Email; // global
 }
 
 class UserService {
   public create(dto: CreateUserDto) {
-    console.log(dto.cpf);          // "12345678909" (or however the client sent it)
-    console.log(dto.cpf.masked());  // "123.456.789-09"
-    console.log(dto.cpf.numbers()); // "12345678909"
+    console.log(dto.cpf);            // "12345678909" (or however the client sent it)
+    console.log(dto.cpf.masked());   // "123.456.789-09"
+    console.log(dto.email.domain()); // "example.com"
   }
 }
 ```
 
-With `@ts-typed/compiler`'s build step, the raw string the client sent for `cpf` auto-constructs into a validated `CPF` instance the moment it's assigned — no `new CPF(...)` anywhere in application code, and an invalid CPF throws before `create()` ever runs.
+With `@ts-typed/compiler`'s build step, a raw string crossing a typed boundary auto-constructs into a validated instance the moment it's assigned — no manual `new` anywhere in application code, and an invalid value throws before `create()` ever runs.
 
 Each class behaves like a string everywhere it matters (`console.log`, template literals, `JSON.stringify`, every native `String.prototype` method), while adding its own validation and formatting methods. See [`@ts-typed/compiler`'s README](https://github.com/ts-typed/compiler#readme) for the full `ValueObject`/auto-construction mechanism this package builds on.
 
-## Validators (Brazil)
+## Entry points
 
-Import from `@ts-typed/validators` or `@ts-typed/validators/br` (same exports, either path):
+- `@ts-typed/validators/br` — Brazil-specific document validators.
+- `@ts-typed/validators/global` — validators meant for universal/international use.
+- `@ts-typed/validators` (the bare package root) re-exports everything from both.
+
+## Validators (Brazil) — `@ts-typed/validators/br`
 
 | Class | Document | Check digit | Accepts |
 |---|---|---|---|
@@ -38,20 +44,37 @@ Import from `@ts-typed/validators` or `@ts-typed/validators/br` (same exports, e
 | `CEP` | Postal code | Format only — no check digit exists | `"01310-100"` or `"01310100"` |
 | `Placa` | Vehicle plate | Format only — no check digit exists | Legacy (`"ABC1234"`) or Mercosul (`"ABC1D23"`) |
 | `CNH` | Driver's license number | Modulus 11 | `"03215478120"` |
-| `FullName` | Full name (first + surname) | None — plausibility only | `"Ana Maria Silva Santos"` |
 
-Every document class exposes `.numbers()` (the normalized, unformatted value) and, where there's a natural display format, `.masked()`. `CNH` has no standard formatted display form, so it only exposes `.numbers()`. `FullName` exposes `.firstName()` and `.lastName()` instead.
+Every document class exposes `.numbers()` (the normalized, unformatted value) and, where there's a natural display format, `.masked()`. `CNH` has no standard formatted display form, so it only exposes `.numbers()`.
 
 **`CEP` and `Placa` validate FORMAT only** — neither document type has a nationally standardized check digit, so these confirm shape (length/pattern), not that a specific number was actually issued.
 
+## Validators (global) — `@ts-typed/validators/global`
+
+| Class | What it validates | Notes |
+|---|---|---|
+| `FullName` | A plausible full name (first + surname, any locale/script) | No check digit — plausibility only. `.firstName()`, `.lastName()`. |
+| `Email` | `local-part@domain.tld` | Pragmatic format check, not full RFC 5322. `.localPart()`, `.domain()`. |
+| `CreditCard` | A payment card number | Luhn checksum (network-agnostic). Accepts space/hyphen separators; 12-19 digits. `.numbers()`, `.masked()`. |
+
+```ts
+import { Email, CreditCard, FullName } from '@ts-typed/validators/global';
+
+new Email('ana@example.com').domain();              // "example.com"
+new CreditCard('4532 0151 1283 0366').masked();      // "**** **** **** 0366"
+new FullName('Ana Maria Silva Santos').firstName();  // "Ana"
+```
+
 ## Privacy masking (`.redact()`)
 
-Every class — including `FullName` — exposes `.redact()`, for displaying a value in a context where the full value shouldn't be shown (logs, public listings, support tooling):
+Every class — in both `/br` and `/global` — exposes `.redact()`, for displaying a value in a context where the full value shouldn't be shown (logs, public listings, support tooling):
 
 ```ts
 new CPF('123.456.789-09').redact();                    // "***.456.789-**"
 new CEP('12345-678').redact();                          // "*****-678"
 new FullName('Ana Maria Silva Santos').redact();        // "A** M**** S**** S*****"
+new Email('ana@example.com').redact();                   // "a**@example.com"
+new CreditCard('4532015112830366').redact();             // "**** **** **** 0366"
 ```
 
 Brazil has no single federal standard for this (there's an open legislative proposal asking for one, precisely because different institutions using different masks makes a number easier to reconstruct by cross-referencing). `CPF`'s format matches a real, documented state transparency-portal convention; the rest follow the same principle for consistency, not independent sourcing per document type. `CNPJ` identifies a legal entity, not a natural person, so LGPD's personal-data rules don't apply to it the way they do the others — its `.redact()` exists for API consistency, not because redacting a CNPJ is commonly required.

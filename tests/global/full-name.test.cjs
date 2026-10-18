@@ -3,7 +3,7 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
 const { StrictTypeError } = require('@ts-typed/compiler');
-const { FullName } = require('../../dist/br');
+const { FullName } = require('../../dist/global');
 
 test('FullName accepts a two-word name and exposes firstName/lastName/redact', () => {
   const name = new FullName('Ana Silva');
