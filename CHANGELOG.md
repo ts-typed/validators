@@ -4,6 +4,12 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.6] - 2026-10-19
+
+### Changed
+
+- Bumped the `@ts-typed/compiler` dependency to `0.1.26` (adds the `AggregateErrors()` class decorator). No changes to this package's own code. Keeping this pin in lockstep with `@ts-typed/compiler`'s published version avoids a dual-module-instance bug: an app installing both `@ts-typed/validators` and `@ts-typed/compiler` directly must resolve to a single shared copy of the compiler's runtime, or `instanceof StrictTypeError`/`instanceof ValueObject` checks silently fail across the two separately-loaded copies.
+
 ## [0.1.5] - 2026-10-19
 
 ### Changed
