@@ -4,6 +4,13 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.10] - 2026-10-20
+
+### Changed
+
+- Bumped the exact `@ts-typed/compiler` dependency to `0.1.31` so validators
+  share the compiler runtime identity used by applications and the Nest filter.
+
 ## [0.1.9] - 2026-10-20
 
 ### Fixed
