@@ -4,6 +4,12 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.7] - 2026-10-19
+
+### Changed
+
+- Bumped the exact `@ts-typed/compiler` dependency to `0.1.27`. This keeps `ValueObject` and `StrictTypeError` identity shared with applications and the Nest integration; without it, a CPF validation error can bypass `StrictTypeErrorFilter` and incorrectly become a generic 500 response.
+
 ## [0.1.6] - 2026-10-19
 
 ### Changed
