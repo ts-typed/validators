@@ -4,6 +4,12 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.9] - 2026-10-20
+
+### Fixed
+
+- Updated the exact `@ts-typed/compiler` dependency to `0.1.30`. This preserves one shared `StrictTypeError` and `ValueObject` runtime with the Nest adapter, so invalid validator-backed request input remains a safe HTTP 400 response.
+
 ## [0.1.8] - 2026-10-20
 
 ### Fixed
