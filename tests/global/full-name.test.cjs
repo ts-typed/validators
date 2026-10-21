@@ -26,6 +26,15 @@ test('FullName accepts accented letters, apostrophes and hyphens', () => {
   assert.equal(name.redact(), `J${'*'.repeat(3)} D${'*'.repeat("D'Ávila-Muñoz".length - 1)}`);
 });
 
+test('FullName accepts an NFD-decomposed accented name (e.g. from a macOS filesystem) the same as its NFC form', () => {
+  const nfc = new FullName('José Silva');
+  const nfd = new FullName('José Silva'.normalize('NFD'));
+  assert.equal(nfd.firstName(), nfc.firstName());
+  assert.equal(nfd.lastName(), nfc.lastName());
+  assert.equal(nfd.redact(), nfc.redact());
+  assert.equal(nfd.redact(), `J${'*'.repeat(3)} S${'*'.repeat(4)}`);
+});
+
 test('FullName rejects a single word (no surname)', () => {
   assert.throws(() => new FullName('Ana'), StrictTypeError);
   assert.throws(() => new FullName('   Ana   '), StrictTypeError);

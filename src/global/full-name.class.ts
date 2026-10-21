@@ -47,5 +47,10 @@ export class FullName extends ValueObject {
 }
 
 function normalize(raw: string): string {
-  return raw.trim().replace(/\s+/g, ' ');
+  // NFC-normalize first: a name typed or read from a macOS filesystem is
+  // often NFD (each accented letter as a base letter + separate combining
+  // mark), which the character class below — and `.redact()`'s per-word
+  // character count — would otherwise treat as containing a disallowed/extra
+  // character instead of the single accented letter it visually is.
+  return raw.normalize('NFC').trim().replace(/\s+/g, ' ');
 }

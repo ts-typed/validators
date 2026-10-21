@@ -45,6 +45,12 @@ function isValidCNH(cleaned: string): boolean {
   const digit1 = dv1raw > 9 ? 0 : dv1raw;
   if (digits[9] !== digit1) return false;
   const dv2raw = (s2 % 11) - (dv1raw > 9 ? 2 : 0);
-  const check = dv2raw < 0 ? dv2raw + 11 : (dv2raw > 9 ? 0 : dv2raw);
+  // The "> 9 -> 0" cap applies AFTER the negative-value +11 adjustment too:
+  // dv1raw === 10 (so 2 is subtracted) combined with s2 % 11 === 1 yields
+  // dv2raw === -1, which the +11 branch alone turns into 10 — a value no
+  // single digit can ever equal, making that whole class of otherwise-valid
+  // CNH numbers permanently unrejectable as impossible to satisfy.
+  const adjusted = dv2raw < 0 ? dv2raw + 11 : dv2raw;
+  const check = adjusted > 9 ? 0 : adjusted;
   return digits[10] === check;
 }

@@ -28,6 +28,16 @@ test('CNH rejects all-identical digits', () => {
   }
 });
 
+test('CNH accepts a prefix whose second check digit requires both the +11 and >9->0 adjustments', () => {
+  // Prefix "123000032": dv1raw = 54 % 11 = 10 (forces dv1 = 0, and -2 on
+  // dv2raw), s2 % 11 = 1, so dv2raw = 1 - 2 = -1. The buggy code mapped
+  // -1 -> (-1 + 11) = 10 without then capping it to 0, making this whole
+  // class of otherwise-valid CNH numbers impossible to construct.
+  const cnh = new CNH('12300003200');
+  assert.equal(cnh.numbers(), '12300003200');
+  assert.throws(() => new CNH('12300003201'), StrictTypeError);
+});
+
 test('CNH behaves like a string', () => {
   const cnh = new CNH('03215478120');
   assert.equal(`${cnh}`, '03215478120');

@@ -4,6 +4,27 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.12] - 2026-10-21
+
+### Fixed
+
+- **`CNH` rejected a whole class of otherwise-valid numbers.** The second
+  check digit's "value above 9 becomes 0" rule was applied only to the
+  un-adjusted value, not after the `+11` adjustment for a first check digit
+  of 10 — so a prefix landing on that combination computed a required check
+  digit of 10, which no single digit can ever equal, making that CNH
+  permanently unconstructable. About 1 in 121 valid prefixes were affected.
+- **`FullName` rejected an NFD-decomposed accented name** (each accented
+  letter as a base letter plus a separate combining mark — common for text
+  read from a macOS filesystem or some input methods), even though the
+  visually identical NFC form was accepted. Input is now NFC-normalized
+  before the character-class check and before `firstName()`/`lastName()`/
+  `redact()`, so both forms behave identically.
+
+### Changed
+
+- Synced the `@ts-typed/compiler` peer/dev dependency to `0.1.35`.
+
 ## [0.1.11] - 2026-10-21
 
 ### Fixed
