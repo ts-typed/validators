@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { PIS, Pasep, Nis, Nit } = require('../../dist/br');
 
 test('PIS accepts a formatted valid value and exposes masked/numbers', () => {

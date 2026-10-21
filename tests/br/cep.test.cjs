@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { CEP } = require('../../dist/br');
 
 test('CEP accepts a formatted value and exposes masked/numbers/redact', () => {

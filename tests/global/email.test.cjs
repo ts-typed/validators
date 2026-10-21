@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { Email } = require('../../dist/global');
 
 test('Email accepts a valid address and exposes localPart/domain/redact', () => {

@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 /**
  * An email address, validated pragmatically rather than against the full

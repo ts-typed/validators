@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 /**
  * A Brazilian full name: at least a first name and a surname. There is no

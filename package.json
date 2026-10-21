@@ -1,11 +1,11 @@
 {
     "name": "@ts-typed/validators",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "private": false,
     "publishConfig": {
         "access": "public"
     },
-    "description": "Document/data validators built on @ts-typed/compiler's ValueObject: locale-specific (Brazil) and global (Email, CreditCard, FullName) validators",
+    "description": "Document/data validators built on @ts-typed/core's ValueObject: locale-specific (Brazil) and global (Email, CreditCard, FullName) validators",
     "license": "Apache-2.0",
     "engines": {
         "node": ">=18"
@@ -43,11 +43,11 @@
         "test": "npm run build && node --test --test-concurrency=1"
     },
     "peerDependencies": {
-        "@ts-typed/compiler": ">=0.1.35 <0.2",
+        "@ts-typed/core": ">=0.1.35 <0.2",
         "typescript": ">=5.4 <7"
     },
     "devDependencies": {
-        "@ts-typed/compiler": "0.1.35",
+        "@ts-typed/core": "0.1.35",
         "@types/node": "^22.15.21",
         "typescript": "5.9.3"
     }

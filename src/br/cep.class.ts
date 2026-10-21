@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 /**
  * CEP (Código de Endereçamento Postal).

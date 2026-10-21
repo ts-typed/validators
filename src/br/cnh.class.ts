@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 /**
  * CNH (Carteira Nacional de Habilitação): 11 digits, two modulus-11 check

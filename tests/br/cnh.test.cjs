@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { CNH } = require('../../dist/br');
 
 test('CNH accepts a valid value and exposes numbers()', () => {

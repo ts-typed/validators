@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 const LEGACY = /^[A-Z]{3}\d{4}$/;
 const MERCOSUL = /^[A-Z]{3}\d[A-Z]\d{2}$/;

@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { CreditCard } = require('../../dist/global');
 
 // 4532015112830366 is a Luhn-valid test number (checked independently with the

@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { StrictTypeError } = require('@ts-typed/compiler');
+const { StrictTypeError } = require('@ts-typed/core');
 const { FullName } = require('../../dist/global');
 
 test('FullName accepts a two-word name and exposes firstName/lastName/redact', () => {

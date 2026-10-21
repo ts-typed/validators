@@ -1,4 +1,4 @@
-import { ValueObject } from '@ts-typed/compiler';
+import { ValueObject } from '@ts-typed/core';
 
 /**
  * PIS / PASEP / NIS / NIT: the same 11-digit number and check digit, issued
