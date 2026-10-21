@@ -1,6 +1,20 @@
+<p align="center">
+  <a href="https://ts-typed.com" target="_blank" rel="noopener noreferrer">
+    <img src=".github/logo.svg" alt="ts-typed" width="260" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@ts-typed/validators"><img src="https://img.shields.io/npm/v/@ts-typed/validators.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@ts-typed/validators"><img src="https://img.shields.io/npm/dm/@ts-typed/validators.svg" alt="npm downloads"></a>
+  <a href="https://github.com/ts-typed/validators/actions/workflows/ci.yml"><img src="https://github.com/ts-typed/validators/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/node-%3E%3D18-339933?logo=node.js&logoColor=white" alt="Node >=18">
+  <a href="https://github.com/ts-typed/validators/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
+</p>
+
 # @ts-typed/validators
 
-Document/data validators built on [`@ts-typed/compiler`](https://www.npmjs.com/package/@ts-typed/compiler)'s `ValueObject` — declare a type, and `@ts-typed/compiler` auto-constructs and validates it at every typed boundary, no decorator or manual `new` needed.
+Document/data validators built on [`@ts-typed/core`](https://www.npmjs.com/package/@ts-typed/core)'s `ValueObject` — declare a type, and `@ts-typed/core` auto-constructs and validates it at every typed boundary, no decorator or manual `new` needed.
 
 ```bash
 npm install @ts-typed/validators
@@ -24,9 +38,9 @@ class UserService {
 }
 ```
 
-With `@ts-typed/compiler`'s build step, a raw string crossing a typed boundary auto-constructs into a validated instance the moment it's assigned — no manual `new` anywhere in application code, and an invalid value throws before `create()` ever runs.
+With `@ts-typed/core`'s build step, a raw string crossing a typed boundary auto-constructs into a validated instance the moment it's assigned — no manual `new` anywhere in application code, and an invalid value throws before `create()` ever runs.
 
-Each class behaves like a string everywhere it matters (`console.log`, template literals, `JSON.stringify`, every native `String.prototype` method), while adding its own validation and formatting methods. See [`@ts-typed/compiler`'s README](https://github.com/ts-typed/compiler#readme) for the full `ValueObject`/auto-construction mechanism this package builds on.
+Each class behaves like a string everywhere it matters (`console.log`, template literals, `JSON.stringify`, every native `String.prototype` method), while adding its own validation and formatting methods. See [`@ts-typed/core`'s README](https://github.com/ts-typed/ts-typed#readme) for the full `ValueObject`/auto-construction mechanism this package builds on.
 
 ## Entry points
 
