@@ -41,6 +41,12 @@ test('CNPJ rejects a wrong legacy check digit, wrong length and invalid characte
   assert.throws(() => new CNPJ('1122233300018$'), StrictTypeError);
 });
 
+test('CNPJ rejects all-same-character sequences, including an all-zero placeholder', () => {
+  for (const repeated of ['00000000000000', '11111111111111', 'AAAAAAAAAAAAAA']) {
+    assert.throws(() => new CNPJ(repeated), StrictTypeError);
+  }
+});
+
 test('CNPJ behaves like a string', () => {
   const cnpj = new CNPJ('11222333000181');
   assert.equal(`${cnpj}`, '11222333000181');

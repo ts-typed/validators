@@ -13,7 +13,13 @@ export class Email extends ValueObject {
   }
 
   protected isValid(raw: string): boolean {
-    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(raw);
+    // Dot-separated atoms (no leading/trailing/consecutive dots) for the
+    // local part, and hyphen-free label boundaries (no leading/trailing
+    // hyphen, no consecutive dots) for the domain — the original
+    // character-class-only regex accepted both.
+    return /^[A-Za-z0-9_%+-]+(\.[A-Za-z0-9_%+-]+)*@([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/.test(
+      raw,
+    );
   }
 
   /** Everything before the `@`: `"ana@example.com"` -> `"ana"`. */

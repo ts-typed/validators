@@ -13,7 +13,13 @@ export class FullName extends ValueObject {
 
   protected isValid(raw: string): boolean {
     const words = normalize(raw).split(' ');
-    return words.length >= 2 && words.every((word) => /^[A-Za-zÀ-ÖØ-öø-ÿ'-]+$/.test(word));
+    // The lookahead requires at least one real letter per word, so a word
+    // made only of apostrophes/hyphens (e.g. "- -") is rejected even though
+    // those characters are otherwise allowed inside a word.
+    return (
+      words.length >= 2 &&
+      words.every((word) => /^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ'-]+$/.test(word))
+    );
   }
 
   /** The first word: `"Ana Maria Silva Santos"` -> `"Ana"`. */

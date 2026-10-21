@@ -4,6 +4,31 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.11] - 2026-10-21
+
+### Fixed
+
+- **`CNPJ` accepted an all-same-character sequence** (e.g. `"00000000000000"`),
+  because only `CPF` and `PIS` had the repeated-digit guard. Added the same
+  guard to `CNPJ`, covering both the legacy numeric and alphanumeric formats.
+- **`Email` accepted malformed addresses** such as `"a..b@example.com"`,
+  `".a@example.com"`, `"a.@example.com"`, and a domain label starting or
+  ending with a hyphen (`"a@-x.com"`). The format check now rejects
+  leading/trailing/consecutive dots and hyphen-led/trailed domain labels.
+- **`FullName` accepted a word made only of apostrophes or hyphens** (e.g.
+  `"- -"`), since the character class allowed those punctuation marks without
+  requiring an actual letter. Each word must now contain at least one letter.
+
+### Changed
+
+- **`@ts-typed/compiler` moved from a pinned `dependencies` entry to a
+  `peerDependencies` range (`>=0.1.34 <0.2`)**, with `0.1.34` as a
+  `devDependencies` pin for local builds/tests. Every prior release bumped an
+  exact `dependencies` version to keep a single compiler runtime instance
+  shared with the application — this instead removes the need to republish on
+  every compiler patch, the same structural fix `@ts-typed/express` applied in
+  `fix: share compiler runtime as peer dependency`.
+
 ## [0.1.10] - 2026-10-20
 
 ### Changed

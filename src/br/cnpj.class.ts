@@ -65,6 +65,7 @@ function calcDV(values: number[], weights: number[]): number {
 function isValidCNPJ(cleanedUpper: string): boolean {
   if (cleanedUpper.length !== 14) return false;
   if (!/^[0-9A-Z]{12}[0-9]{2}$/.test(cleanedUpper)) return false;
+  if (/^(.)\1{13}$/.test(cleanedUpper)) return false;
   const values = cleanedUpper.slice(0, 12).split('').map(charValue);
   const checkDigits = cleanedUpper.slice(12).split('').map(Number);
   const dv1Weights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];

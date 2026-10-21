@@ -38,6 +38,15 @@ test('Email rejects invalid formats', () => {
   assert.throws(() => new Email(''), StrictTypeError);
 });
 
+test('Email rejects malformed dots and hyphen-led domain labels', () => {
+  assert.throws(() => new Email('a..b@example.com'), StrictTypeError); // consecutive dots, local part
+  assert.throws(() => new Email('.a@example.com'), StrictTypeError); // leading dot, local part
+  assert.throws(() => new Email('a.@example.com'), StrictTypeError); // trailing dot, local part
+  assert.throws(() => new Email('a@x..com'), StrictTypeError); // consecutive dots, domain
+  assert.throws(() => new Email('a@-x.com'), StrictTypeError); // hyphen-led domain label
+  assert.throws(() => new Email('a@x-.com'), StrictTypeError); // hyphen-trailed domain label
+});
+
 test('Email behaves like a string', () => {
   const email = new Email('ana@example.com');
   assert.equal(`${email}`, 'ana@example.com');

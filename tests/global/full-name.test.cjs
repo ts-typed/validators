@@ -38,6 +38,12 @@ test('FullName rejects digits and disallowed symbols', () => {
   assert.throws(() => new FullName('Ana @Silva'), StrictTypeError);
 });
 
+test('FullName rejects a word made only of apostrophes or hyphens', () => {
+  assert.throws(() => new FullName('- -'), StrictTypeError);
+  assert.throws(() => new FullName("' '"), StrictTypeError);
+  assert.throws(() => new FullName('Ana -'), StrictTypeError);
+});
+
 test('FullName normalizes extra, leading and trailing whitespace', () => {
   const messy = new FullName('  Ana   Silva  ');
   const clean = new FullName('Ana Silva');
