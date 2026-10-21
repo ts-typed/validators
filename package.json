@@ -1,6 +1,6 @@
 {
     "name": "@ts-typed/validators",
-    "version": "0.1.13",
+    "version": "0.1.14",
     "private": false,
     "publishConfig": {
         "access": "public"
@@ -43,11 +43,11 @@
         "test": "npm run build && node --test --test-concurrency=1"
     },
     "peerDependencies": {
-        "@ts-typed/core": ">=0.1.35 <0.2",
+        "@ts-typed/core": ">=0.1.36 <0.2",
         "typescript": ">=5.4 <7"
     },
     "devDependencies": {
-        "@ts-typed/core": "0.1.35",
+        "@ts-typed/core": "0.1.36",
         "@types/node": "^22.15.21",
         "typescript": "5.9.3"
     }
