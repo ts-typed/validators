@@ -43,11 +43,11 @@
         "test": "npm run build && node --test --test-concurrency=1"
     },
     "peerDependencies": {
-        "@ts-typed/core": ">=0.1.36 <0.2",
+        "@ts-typed/core": ">=0.2.0 <0.3",
         "typescript": ">=5.4 <7"
     },
     "devDependencies": {
-        "@ts-typed/core": "0.1.36",
+        "@ts-typed/core": "0.2.0",
         "@types/node": "^22.15.21",
         "typescript": "5.9.3"
     }
