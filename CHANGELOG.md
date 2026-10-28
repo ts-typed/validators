@@ -4,6 +4,16 @@ All notable changes to `@ts-typed/validators` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.17] - 2026-10-28
+
+### Changed
+
+- Bumped the `@ts-typed/core` peer/dev dependency to `0.4.0`. That release
+  resolves `instanceof` across files for `compiler.strictClass`/`@StrictClass()`
+  (when the class is imported by name) and flips `compiler.strictClass`'s
+  global default to `true` (breaking). Set `compiler.strictClass: false` or
+  decorate a class with `@StructuralClass()` to keep the previous behavior.
+
 ## [0.1.16] - 2026-10-27
 
 ### Changed
